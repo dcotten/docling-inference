@@ -53,6 +53,7 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         do_picture_classification=True,
         do_picture_description=True,
     )
+    
     pdf_pipeline_options.picture_description_options = granite_picture_description
 
     # Then pass the configured options into the converter
