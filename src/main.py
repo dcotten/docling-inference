@@ -10,6 +10,7 @@ from docling.datamodel.base_models import (
     InputFormat,
 )
 from docling.datamodel.document import ConversionResult
+from docling.datamodel.pipeline_options import granite_picture_description
 from docling.datamodel.pipeline_options import EasyOcrOptions, PdfPipelineOptions
 from docling.document_converter import DocumentConverter, PdfFormatOption
 from docling_core.types.doc.document import DoclingDocument
@@ -45,16 +46,20 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     config = Config()
 
     ocr_languages = config.ocr_languages.split(",")
+    pdf_pipeline_options = PdfPipelineOptions(
+        ocr_options=EasyOcrOptions(lang=ocr_languages),
+        do_code_enrichment=True,
+        do_formula_enrichment=True,
+        do_picture_classification=True,
+        do_picture_description=True,
+    )
+    pdf_pipeline_options.picture_description_options = granite_picture_description
+
+    # Then pass the configured options into the converter
     converter = DocumentConverter(
         format_options={
             InputFormat.PDF: PdfFormatOption(
-                pipeline_options=PdfPipelineOptions(
-                    ocr_options=EasyOcrOptions(lang=ocr_languages),
-                    do_code_enrichment=False,
-                    do_formula_enrichment=False,
-                    do_picture_classification=False,
-                    do_picture_description=False,
-                )
+                pipeline_options=pdf_pipeline_options
             )
         }
     )
