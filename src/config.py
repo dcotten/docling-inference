@@ -5,7 +5,7 @@ from pydantic_settings import BaseSettings
 
 
 class Config(BaseSettings):
-    num_workers: int | float | None = None
+    num_workers: int | float | None = -1
     log_level: str = "INFO"
     dev_mode: bool = False
     port: int = 8080
