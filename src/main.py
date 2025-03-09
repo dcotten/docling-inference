@@ -55,6 +55,10 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     )
     
     pdf_pipeline_options.picture_description_options = granite_picture_description
+    pdf_pipeline_options.do_ocr=True
+    pdf_pipeline_options.do_table_structure = True
+    pdf_pipeline_options.table_structure_options.do_cell_matching = True
+    
 
     # Then pass the configured options into the converter
     converter = DocumentConverter(
