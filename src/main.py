@@ -52,12 +52,9 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         do_formula_enrichment=True,
         do_picture_classification=True,
         do_picture_description=True,
+        do_table_structure=True,
+        do_ocr=True
     )
-    
-    pdf_pipeline_options.picture_description_options = granite_picture_description
-    pdf_pipeline_options.do_ocr=True
-    pdf_pipeline_options.do_table_structure = True
-    pdf_pipeline_options.table_structure_options.do_cell_matching = True
     
 
     # Then pass the configured options into the converter
