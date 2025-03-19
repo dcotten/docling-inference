@@ -49,8 +49,6 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         ocr_options=EasyOcrOptions(lang=ocr_languages),
         do_code_enrichment=True,
         do_formula_enrichment=True,
-        do_picture_classification=True,
-        do_picture_description=True,
         do_table_structure=True,
         do_ocr=True
     )
