@@ -45,20 +45,17 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     config = Config()
 
     ocr_languages = config.ocr_languages.split(",")
-    pdf_pipeline_options = PdfPipelineOptions(
-        ocr_options=EasyOcrOptions(lang=ocr_languages),
-        do_code_enrichment=True,
-        do_formula_enrichment=True,
-        do_table_structure=True,
-        do_ocr=True
-    )
-    
-
-    # Then pass the configured options into the converter
     converter = DocumentConverter(
         format_options={
             InputFormat.PDF: PdfFormatOption(
-                pipeline_options=pdf_pipeline_options
+                pipeline_options=PdfPipelineOptions(
+                    ocr_options=EasyOcrOptions(lang=ocr_languages),
+                    do_code_enrichment=True,
+                    do_formula_enrichment=True,
+                    do_table_structure=True,
+                    do_picture_classification=False,
+                    do_picture_description=False,
+                )
             )
         }
     )
@@ -121,11 +118,6 @@ def convert(request: Request) -> ConvertFunc:
             ) from exc
 
     return convert_func
-
-@app.get("/health")
-def health_check():
-    return "OK"
-
 
 
 @app.post("/parse/url", response_model=ParseResponse)

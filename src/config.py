@@ -5,7 +5,7 @@ from pydantic_settings import BaseSettings
 
 
 class Config(BaseSettings):
-    num_workers: int | float | None = -1
+    num_workers: int | float | None = None
     log_level: str = "INFO"
     dev_mode: bool = False
     port: int = 8080
@@ -13,7 +13,8 @@ class Config(BaseSettings):
     ocr_languages: str = "en,es,fr,de,sv"
     do_code_enrichment: bool = True
     do_formula_enrichment: bool = True
-
+    do_picture_classification: bool = True
+    do_picture_description: bool = True
 
     def get_num_workers(self) -> int | None:
         if self.num_workers is None:
