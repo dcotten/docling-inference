@@ -124,6 +124,11 @@ def convert(request: Request) -> ConvertFunc:
 
     return convert_func
 
+@app.get("/health")
+def health_check():
+    return "OK"
+
+
 
 @app.post("/parse/url", response_model=ParseResponse)
 def parse_document_url(
