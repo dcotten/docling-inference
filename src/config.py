@@ -11,10 +11,9 @@ class Config(BaseSettings):
     port: int = 8080
     auth_token: str | None = None
     ocr_languages: str = "en,es,fr,de,sv"
-    do_code_enrichment: bool = False
-    do_formula_enrichment: bool = False
-    do_picture_classification: bool = False
-    do_picture_description: bool = False
+    do_code_enrichment: bool = True
+    do_formula_enrichment: bool = True
+
 
     def get_num_workers(self) -> int | None:
         if self.num_workers is None:
